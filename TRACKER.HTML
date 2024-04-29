@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" href="TRACKER.CSS">
+    <title>Hello, world!</title>
+  </head>
+  <body>
+    <body>
+        <h1>EXPANSE $ TRACKER </h1>
+        <form>
+            <div  class="container">
+            catagory: <input type="text" id="name" required><br>
+            Amount: <input type="number" step=".01" id="amount" required><br>
+            Date: <input type="date" id="date"><br>
+            <button onclick="addExpense()" class="btn btn-primary center-block">ADD EXPENSE</button>
+    </div>
+    
+        </form>
+        <div id="item-list"><li>your expanses</li></div>
+      
+        
+    </body>
+    <script>
+        // we will Define an array to store expenses
+        var expenses = [];
+        var editIndex = null; 
+    
+        // then Define a function to add an expense
+        function addExpense(event) {
+            event.preventDefault(); //it will  Prevent form submission
+    
+            // to Get input values
+            var category = document.getElementById("name").value;
+            var amount = document.getElementById("amount").value;
+            var date = document.getElementById("date").value;
+    
+            // Check if we are in edit mode
+            if (editIndex !== null) {
+                // Update the existing expense
+                expenses[editIndex] = { category: category, amount: amount, date: date };
+                editIndex = null; // Reset editIndex
+            } else {
+                // Create a new expense object
+                var expense = { category: category, amount: amount, date: date };
+                expenses.push(expense);
+            }
+    
+            // Display expenses
+            displayExpenses();
+    
+            // Clear input fields after adding an expense
+            document.getElementById("name").value = "";
+            document.getElementById("amount").value = "";
+            document.getElementById("date").value = "";
+        }
+    
+        // Define a function to display expenses
+        function displayExpenses() {
+            var itemList = document.getElementById("item-list");
+            itemList.innerHTML = ""; // Clear existing list
+    
+            expenses.forEach(function (expense, index) {
+                var listItem = document.createElement("li");
+                listItem.textContent = `Category: ${expense.category}, Amount: $${expense.amount}, Date: ${expense.date}`;
+    
+                
+                // Create edit button
+                var editButton = document.createElement("button");
+                editButton.textContent = "Edit";
+                editButton.onclick = function () {
+                    editExpense(index);
+                };
+    
+                // Create delete button
+                var deleteButton = document.createElement("button");
+                deleteButton.textContent = "Delete";
+                deleteButton.onclick = function () {
+                    deleteExpense(index);
+                };
+    
+                // Append buttons to the list item
+                listItem.appendChild(editButton);
+                listItem.appendChild(deleteButton);
+    
+                // Append the list item to the item list
+                itemList.appendChild(listItem);
+            });
+        }
+    
+        // Define a function to edit an expense
+        function editExpense(index) {
+            var expense = expenses[index];
+            document.getElementById("name").value = expense.category;
+            document.getElementById("amount").value = expense.amount;
+            document.getElementById("date").value = expense.date;
+            editIndex = index; // Add this line
+        }
+    
+        // Define a function to delete an expense
+        function deleteExpense(index) {
+            expenses.splice(index, 1);
+            displayExpenses();
+        }
+    
+        // Add an event listener to the "Add Expense" button
+        document.getElementById("btn").addEventListener("click", addExpense);
+    </script>
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+  </body>
+</html>

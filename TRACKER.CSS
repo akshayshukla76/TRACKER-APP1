@@ -1,0 +1,56 @@
+.container {
+   
+    display:inline-flex;
+    
+    align-self: center;
+    align-items: center;
+    justify-content: center;
+    
+    size: 10%;
+
+    gap: 3rem; 
+    line-height: 2%;
+font-size: 20px;
+    margin-top: 5rem;
+    margin-left: 8rem;
+    
+    background-color: rgb(237, 237, 212);
+    padding: 2%;
+    
+}
+h1{
+   text-align: center; 
+   background-color: cadetblue;
+   color: wheat;
+   font-size: 3em;  
+  
+   align-items: center;
+   margin: auto;
+}
+#item-list{
+    background-color: lightslategray;
+    background-blend-mode: lighten;
+    margin-top: 5%;
+    font-size: 28px;
+    justify-content: center;
+    display: inline-flex;
+    flex-direction: column;
+    color: white;
+    box-shadow: var(---box-shadow);
+    gap:  2rem;
+    
+    border-radius: 10px
+   
+    
+}
+#name,#amount,#date{
+    background-color: azure;
+    color: blue;
+    size: 8px;
+    ;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+}
+#btn{background-color: lightgray;
+size: 10cap;
+opacity: unset;
+}
