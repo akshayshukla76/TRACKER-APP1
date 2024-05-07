@@ -18,9 +18,11 @@
             catagory: <input type="text" id="name" required><br>
             Amount: <input type="number" step=".01" id="amount" required><br>
             Date: <input type="date" id="date"><br>
-            <button onclick="addExpense()" class="btn btn-primary center-block">ADD EXPENSE</button>
+            <button id="btn" class="btn btn-primary center-block">ADD EXPENSE</button>
+
     </div>
-    
+   
+
         </form>
         <div id="item-list"><li>your expanses</li></div>
       
@@ -32,33 +34,66 @@
         var editIndex = null; 
     
         // then Define a function to add an expense
-        function addExpense(event) {
-            event.preventDefault(); //it will  Prevent form submission
-    
-            // to Get input values
-            var category = document.getElementById("name").value;
-            var amount = document.getElementById("amount").value;
-            var date = document.getElementById("date").value;
-    
-            // Check if we are in edit mode
-            if (editIndex !== null) {
-                // Update the existing expense
-                expenses[editIndex] = { category: category, amount: amount, date: date };
-                editIndex = null; // Reset editIndex
-            } else {
-                // Create a new expense object
-                var expense = { category: category, amount: amount, date: date };
-                expenses.push(expense);
-            }
-    
-            // Display expenses
-            displayExpenses();
-    
-            // Clear input fields after adding an expense
-            document.getElementById("name").value = "";
-            document.getElementById("amount").value = "";
-            document.getElementById("date").value = "";
-        }
+       // Define a function to add an expense
+function addExpense(event) {
+    event.preventDefault(); // Prevent form submission
+
+    // Get input values
+    var category = document.getElementById("name").value;
+    var amount = document.getElementById("amount").value;
+    var date = document.getElementById("date").value;
+
+    // Check if we are in edit mode
+    if (editIndex !== null) {
+        // Update the existing expense
+        expenses[editIndex] = { category: category, amount: amount, date: date };
+        editIndex = null; // Reset editIndex
+    } else {
+        // Create a new expense object
+        var expense = { category: category, amount: amount, date: date };
+        expenses.push(expense);
+    }
+
+    // Save expenses to local storage
+    localStorage.setItem('expenses', JSON.stringify(expenses));
+
+    // Display expenses
+    displayExpenses();
+
+    // Clear input fields after adding an expense
+    document.getElementById("name").value = "";
+    document.getElementById("amount").value = "";
+    document.getElementById("date").value = "";
+}
+
+// Define a function to display expenses
+function displayExpenses() {
+    var itemList = document.getElementById("item-list");
+    itemList.innerHTML = ""; // Clear existing list
+
+    // Load expenses from local storage
+    expenses = JSON.parse(localStorage.getItem('expenses')) || [];
+
+    expenses.forEach(function (expense, index) {
+        // ... existing code ...
+    });
+}
+
+// Define a function to delete an expense
+function deleteExpense(index) {
+    expenses.splice(index, 1);
+
+    // this line will Save expenses to local storage
+    localStorage.setItem('expenses', JSON.stringify(expenses));
+
+    displayExpenses();
+}
+
+//it will Load expenses from local storage when the page loads
+window.onload = function() {
+    displayExpenses();
+}
+
     
         // Define a function to display expenses
         function displayExpenses() {
